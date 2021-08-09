@@ -1,6 +1,11 @@
 import styles from "./AddUser.module.css";
+import Card from "../UI/Card";
 
 const AddUser = () => {
-  return <div>add user</div>;
+  return (
+    <Card>
+      <div>add user</div>
+    </Card>
+  );
 };
 export default AddUser;
