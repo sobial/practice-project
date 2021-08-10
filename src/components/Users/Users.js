@@ -1,10 +1,13 @@
+import User from "./User";
 import styles from "./Users.module.css";
 import Card from "../UI/Card";
 
-const Users = () => {
+const Users = (props) => {
   return (
     <Card>
-      <div>this is users!</div>
+      {props.users.map((user) => {
+        return <User name={user.name} age={user.age} key={user.id} />;
+      })}
     </Card>
   );
 };
