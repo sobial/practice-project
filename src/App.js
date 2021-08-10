@@ -11,9 +11,15 @@ function App() {
     { name: "moosa", age: "12", id: "u4" },
     { name: "karim", age: "56", id: "u5" },
   ]);
+  const addUserHandler = (newUser) => {
+    // console.log(user.name, user.age);
+    setUsers((prevState) => {
+      return [...prevState, newUser];
+    });
+  };
   return (
     <div className={styles.app}>
-      <AddUser></AddUser>
+      <AddUser onAddUser={addUserHandler}></AddUser>
       <Users users={users}></Users>
     </div>
   );
