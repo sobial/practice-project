@@ -1,5 +1,5 @@
 import User from "./User";
-import styles from "./Users.module.css";
+// import styles from "./Users.module.css";
 import Card from "../UI/Card";
 
 const Users = (props) => {

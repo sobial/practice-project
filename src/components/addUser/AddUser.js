@@ -11,7 +11,6 @@ const AddUser = (props) => {
 
   const closeModalHandler = (event) => {
     event.preventDefault();
-    console.log("closed");
     setShowModal(false);
   };
 
