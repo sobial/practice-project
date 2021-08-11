@@ -7,6 +7,7 @@ const AddUser = (props) => {
   const [userName, setUserName] = useState("");
   const [userAge, setUserAge] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [errorMessege, setErrorMessege] = useState("");
 
   const closeModalHandler = (event) => {
     event.preventDefault();
@@ -16,12 +17,21 @@ const AddUser = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    if (userAge.trim().length === 0 || userName.trim().length === 0) {
+      //open modal
+      setUserName("");
+      setUserAge("");
+      setErrorMessege("Please enter valid, non-empty values");
+      setShowModal(true);
+      return;
+    }
     if (userAge < 1) {
       //open modal
+      setUserName("");
+      setUserAge("");
+      setErrorMessege("Age must be geater than zero");
       setShowModal(true);
-    }
-    if (userAge === "" || userName === "") {
-      //open modal
+      return;
     } else {
       props.onAddUser({
         name: userName,
@@ -59,7 +69,11 @@ const AddUser = (props) => {
             Add User
           </button>
         </div>
-        <Modal show={showModal} closeModal={closeModalHandler} />
+        <Modal
+          show={showModal}
+          closeModal={closeModalHandler}
+          messege={errorMessege}
+        />
       </form>
     </Card>
   );
