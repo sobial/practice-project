@@ -1,20 +1,36 @@
 import { useState } from "react";
 import styles from "./AddUser.module.css";
 import Card from "../UI/Card";
+import Modal from "../UI/Modal";
 
 const AddUser = (props) => {
   const [userName, setUserName] = useState("");
   const [userAge, setUserAge] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const closeModalHandler = (event) => {
+    event.preventDefault();
+    console.log("closed");
+    setShowModal(false);
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
-    // console.log(userName, userAge);
-    props.onAddUser({
-      name: userName,
-      age: userAge,
-      id: Math.random().toString(),
-    });
-    setUserName("");
-    setUserAge("");
+    if (userAge < 1) {
+      //open modal
+      setShowModal(true);
+    }
+    if (userAge === "" || userName === "") {
+      //open modal
+    } else {
+      props.onAddUser({
+        name: userName,
+        age: userAge,
+        id: Math.random().toString(),
+      });
+      setUserName("");
+      setUserAge("");
+    }
   };
   const onUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -43,6 +59,7 @@ const AddUser = (props) => {
             Add User
           </button>
         </div>
+        <Modal show={showModal} closeModal={closeModalHandler} />
       </form>
     </Card>
   );
