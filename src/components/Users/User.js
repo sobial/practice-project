@@ -4,9 +4,7 @@ import styles from "./User.module.css";
 const User = (props) => {
   return (
     <Card className={styles.card}>
-      <div className={styles["user-container"]}>
-        {props.name} ({props.age}years old)
-      </div>
+      {props.name} ({props.age}years old)
     </Card>
   );
 };

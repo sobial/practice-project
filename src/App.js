@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Users from "./components/Users/Users";
 import AddUser from "./components/addUser/AddUser";
-import styles from "./App.module.css";
+import React from "react";
 
 function App() {
   const [users, setUsers] = useState([
@@ -18,10 +18,12 @@ function App() {
     });
   };
   return (
-    <div className={styles.app}>
+    // <div className={styles.app}>
+    <React.Fragment>
       <AddUser onAddUser={addUserHandler}></AddUser>
       <Users users={users}></Users>
-    </div>
+    </React.Fragment>
+    // </div>
   );
 }
 
