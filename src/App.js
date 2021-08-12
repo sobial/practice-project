@@ -18,12 +18,10 @@ function App() {
     });
   };
   return (
-    // <div className={styles.app}>
     <React.Fragment>
       <AddUser onAddUser={addUserHandler}></AddUser>
       <Users users={users}></Users>
     </React.Fragment>
-    // </div>
   );
 }
 
