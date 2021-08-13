@@ -23,6 +23,7 @@ const AddUser = (props) => {
       inputNameRef.current.value = "";
       inputAgeRef.current.value = "";
       //open modal
+      console.log("should open modal");
       setErrorMessege("Please enter valid, non-empty values");
       setShowModal(true);
       return;

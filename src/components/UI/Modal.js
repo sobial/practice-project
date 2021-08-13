@@ -1,7 +1,9 @@
 import styles from "./Modal.module.css";
 import Card from "./Card";
+import ReactDom from "react-dom";
+import React from "react";
 
-const Modal = (props) => {
+const ModalComponent = (props) => {
   return (
     <div
       className={`${styles["modal-background"]} ${
@@ -22,6 +24,21 @@ const Modal = (props) => {
         </Card>
       </div>
     </div>
+  );
+};
+
+const Modal = (props) => {
+  return (
+    <React.Fragment>
+      {ReactDom.createPortal(
+        <ModalComponent
+          show={props.show}
+          closeModal={props.closeModal}
+          messege={props.messege}
+        />,
+        document.getElementById("modal-container")
+      )}
+    </React.Fragment>
   );
 };
 export default Modal;
