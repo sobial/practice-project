@@ -3,6 +3,12 @@
   flex-direction: column;
   justify-content: space-around;
 }
+.invalid {
+  background-color: #fadfdf;
+}
+.valid {
+  background-color: white;
+}
 .name {
   display: flex;
   flex-direction: column;
