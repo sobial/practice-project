@@ -1,20 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import styles from "./AddUser.module.css";
 import Card from "../UI/Card";
 import Modal from "../UI/Modal";
 
+const modalReducer = (state, action) => {
+  if (action.type === "SHOW_MODAL") {
+    return { showModal: action.payload, errorMessage: state.errorMessage };
+  }
+  if (action.type === "SET_EMPTY_MESSAGE") {
+    return {
+      showModal: state.showModal,
+      errorMessage: "Please enter valid, non-empty values",
+    };
+  }
+  if (action.type === "SET_VALID_AGE_MESSAGE") {
+    return {
+      showModal: state.showModal,
+      errorMessage: "Age must be geater than zero",
+    };
+  }
+  return { showModal: true, errorMessage: "somthing wrong" };
+};
+
 const AddUser = (props) => {
-  const [showModal, setShowModal] = useState(false);
-  const [errorMessege, setErrorMessege] = useState("");
+  // const [showModal, setShowModal] = useState(false);
+  // const [errorMessege, setErrorMessege] = useState("");
+
+  const [modalState, modalDispatch] = useReducer(modalReducer, {
+    showModal: false,
+    errorMessage: "init msg",
+  });
+
   const [isValid, setIsvalid] = useState(false);
+
   const [inputNameState, setInputNameState] = useState("");
   const [inputAgeState, setInputAgeState] = useState("0");
+  //just for example i keep both nameRef and nameState
   const inputNameRef = React.createRef();
   const inputAgeRef = React.createRef();
 
   const closeModalHandler = (event) => {
     event.preventDefault();
-    setShowModal(false);
+    modalDispatch({ type: "SHOW_MODAL", payload: false });
+    // setShowModal(false);
   };
   const onNameChange = (event) => {
     setInputNameState(event.target.value);
@@ -31,16 +59,19 @@ const AddUser = (props) => {
     const TimeId = setTimeout(() => {
       if (inputNameState.trim().length > 0 && parseInt(inputAgeState) > 1) {
         setIsvalid(true);
+        // modalDispatch({type:'SHOW_MODAL' , payload:true})
         return true;
       } else if (inputNameState.trim().length === 0 || inputAgeState === "0") {
         setIsvalid(false);
-        console.log("safdaf");
+        // setErrorMessege("Please enter valid, non-empty values");
+        console.log("empty msg");
+        modalDispatch({ type: "SET_EMPTY_MESSAGE", payload: "" });
 
-        setErrorMessege("Please enter valid, non-empty values");
         return false;
       } else if (parseInt(inputAgeState) < 1) {
         setIsvalid(false);
-        setErrorMessege("Age must be geater than zero");
+        // setErrorMessege("Age must be geater than zero");
+        modalDispatch({ type: "SET_VALID_AGE_MESSAGE", payload: "" });
         return false;
       }
     }, 500);
@@ -54,7 +85,8 @@ const AddUser = (props) => {
 
     if (!isValid) {
       //open modal
-      setShowModal(true);
+      // setShowModal(true);
+      modalDispatch({ type: "SHOW_MODAL", payload: true });
       return;
     } else {
       props.onAddUser({
@@ -95,9 +127,9 @@ const AddUser = (props) => {
           </button>
         </div>
         <Modal
-          show={showModal}
+          show={modalState.showModal}
           closeModal={closeModalHandler}
-          messege={errorMessege}
+          messege={modalState.errorMessage}
         />
       </form>
     </Card>
