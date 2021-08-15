@@ -1,7 +1,9 @@
 import { useState } from "react";
+import React from "react";
+
+import Login from "./components/Login/Login";
 import Users from "./components/Users/Users";
 import AddUser from "./components/addUser/AddUser";
-import React from "react";
 
 function App() {
   const [users, setUsers] = useState([
@@ -11,6 +13,12 @@ function App() {
     { name: "moosa", age: "12", id: "u4" },
     { name: "karim", age: "56", id: "u5" },
   ]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const onLoginHandler = (username, pass) => {
+    setIsLoggedIn(true);
+    console.log(username, pass);
+  };
+
   const addUserHandler = (newUser) => {
     // console.log(user.name, user.age);
     setUsers((prevState) => {
@@ -19,8 +27,13 @@ function App() {
   };
   return (
     <React.Fragment>
-      <AddUser onAddUser={addUserHandler}></AddUser>
-      <Users users={users}></Users>
+      {!isLoggedIn && <Login onLogin={onLoginHandler} />}
+      {isLoggedIn && (
+        <div>
+          <AddUser onAddUser={addUserHandler}></AddUser>
+          <Users users={users}></Users>
+        </div>
+      )}
     </React.Fragment>
   );
 }
