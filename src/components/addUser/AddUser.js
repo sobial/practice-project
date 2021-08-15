@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer, useContext } from "react";
 import styles from "./AddUser.module.css";
 import Card from "../UI/Card";
 import Modal from "../UI/Modal";
+import AuthContext from "../store/Auth-context";
 
 const modalReducer = (state, action) => {
   if (action.type === "SHOW_MODAL") {
@@ -51,6 +52,8 @@ const AddUser = (props) => {
   const onAgeChange = (event) => {
     setInputAgeState(event.target.value);
   };
+
+  const userContext = useContext(AuthContext);
 
   //this useEffect validates input whenever entered data changes but with 500ms delay
   //that means when the user stops typing, it validates the input.
@@ -102,6 +105,7 @@ const AddUser = (props) => {
   return (
     <Card>
       <form className={styles.form}>
+        <div>{userContext.isLoggedIn && <p>hey {userContext.username}</p>}</div>
         <div className={styles.name}>
           <label>User Name</label>
           <input

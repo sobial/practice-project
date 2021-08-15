@@ -4,6 +4,7 @@ import React from "react";
 import Login from "./components/Login/Login";
 import Users from "./components/Users/Users";
 import AddUser from "./components/addUser/AddUser";
+import AuthContext from "./components/store/Auth-context";
 
 function App() {
   const [users, setUsers] = useState([
@@ -14,8 +15,10 @@ function App() {
     { name: "karim", age: "56", id: "u5" },
   ]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
   const onLoginHandler = (username, pass) => {
     setIsLoggedIn(true);
+    setUsername(username);
     console.log(username, pass);
   };
 
@@ -27,13 +30,20 @@ function App() {
   };
   return (
     <React.Fragment>
-      {!isLoggedIn && <Login onLogin={onLoginHandler} />}
-      {isLoggedIn && (
-        <div>
-          <AddUser onAddUser={addUserHandler}></AddUser>
-          <Users users={users}></Users>
-        </div>
-      )}
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: isLoggedIn,
+          username: username,
+        }}
+      >
+        {!isLoggedIn && <Login onLogin={onLoginHandler} />}
+        {isLoggedIn && (
+          <div>
+            <AddUser onAddUser={addUserHandler}></AddUser>
+            <Users users={users}></Users>
+          </div>
+        )}
+      </AuthContext.Provider>
     </React.Fragment>
   );
 }
